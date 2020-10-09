@@ -146,7 +146,3 @@ if __name__ == "__main__":
 
     print(list_files(startpath=startpath, branch=branch, last_branch=last_branch,
                trunk=trunk, sep=sep, connection=connection))
-
-# list_files('D:\\') #\Project\Python project\Super_translation
-# list_files('D:\Project\Python project\Super_translation', catalog_color='red', file_color='Turquoise')
-# list_files(catalog_color='red', file_color='Turquoise')
