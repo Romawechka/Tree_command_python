@@ -6,6 +6,7 @@ Python version 3.8
 
 import os
 import sys
+import platform
 
 
 def list_files(startpath=os.getcwd(), branch='├', last_branch='└', trunk='|', sep=' ', connection='─'):
@@ -27,6 +28,11 @@ def list_files(startpath=os.getcwd(), branch='├', last_branch='└', trunk='|'
      Example: python Main.py startpath="D:\Project\Python project" branch=├
      P.S. arguments must be separated by a space, path must be in quotes
     """
+    if platform.system() == 'Windows':
+        slash = '\\'
+    else:
+        slash = '/'
+
     full_str = ''
 
     # список с уровнями подкаталогов
@@ -38,18 +44,18 @@ def list_files(startpath=os.getcwd(), branch='├', last_branch='└', trunk='|'
 
         # определим прошлый путь
         last_path = ''
-        for el in root.split('\\')[0:len(root.split('\\')) - 1]:
-            last_path += '\\' + el
+        for el in root.split(slash)[0:len(root.split(slash)) - 1]:
+            last_path += slash + el
         # если прошлый путь это диск
         if last_path.endswith(':'):
-            last_path += '\\'
+            last_path += slash
 
         # Необходимо определить каталоги по прошлому пути
         last_dirs = os.listdir(last_path[1:])
         _last_dirs = []
         for el in last_dirs:
-            if not last_path[1:].endswith('\\'):
-                _path = last_path[1:] + '\\' + el
+            if not last_path[1:].endswith(slash):
+                _path = last_path[1:] + slash + el
             else:
                 _path = last_path[1:] + el
             if os.path.isdir(_path):
@@ -79,7 +85,7 @@ def list_files(startpath=os.getcwd(), branch='├', last_branch='└', trunk='|'
                 dir.pop(dir.index(level - 1))
         else:
             # определяем является ли текущий каталог стартовым
-            if os.path.basename(root) != startpath.split('\\')[len(startpath.split('\\')) - 1]:
+            if os.path.basename(root) != startpath.split(slash)[len(startpath.split(slash)) - 1]:
                 indent = sep * 4 * (level - 1) + branch + connection * 3
 
                 # т.к. данный каталог/файл не последний, заносим уровень подкаталога в список, если его там нету
